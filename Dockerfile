@@ -4,7 +4,7 @@ WORKDIR /src
 
 # 复制所有文件并还原依赖
 COPY . .
-RUN dotnet restore
+
 
 # 发布应用到 /app/out 目录
 RUN dotnet restore "InventorySystemAPI.csproj"
