@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/InventorySystemAPI.props" />
+</Project>
