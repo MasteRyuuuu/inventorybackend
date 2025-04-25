@@ -7,7 +7,9 @@ COPY . .
 RUN dotnet restore
 
 # 发布应用到 /app/out 目录
-RUN dotnet publish -c Release -o /app/out
+RUN dotnet restore "InventorySystemAPI.csproj"
+RUN dotnet publish "InventorySystemAPI.csproj" -c Release -o /app/out
+
 
 # -------- 运行阶段 --------
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
