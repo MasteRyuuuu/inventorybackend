@@ -38,7 +38,7 @@ public IActionResult Add([FromBody] Adjustment adjustment)
     if (inventory != null)
     {
         inventory.Quantity = adjustment.NewQuantity;
-        inventory.UpdatedAt = DateTime.Now;
+        inventory.UpdatedAt = DateTime.UtcNow;
     }
     else
     {
@@ -46,12 +46,12 @@ public IActionResult Add([FromBody] Adjustment adjustment)
         {
             MaterialId = adjustment.MaterialId,
             Quantity = adjustment.NewQuantity,
-            UpdatedAt = DateTime.Now
+            UpdatedAt = DateTime.UtcNow
         });
     }
 
     // 添加 adjustment 记录
-    adjustment.AdjustedAt = DateTime.Now;
+    adjustment.AdjustedAt = DateTime.UtcNow;
     _context.Adjustments.Add(adjustment);
     _context.SaveChanges();
 

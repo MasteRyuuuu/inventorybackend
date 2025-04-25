@@ -23,14 +23,14 @@ namespace InventorySystem.Controllers
             if (transaction == null) return BadRequest("Invalid data.");
 
             transaction.Operation = "in";
-            transaction.CreatedAt = DateTime.Now;
+            transaction.CreatedAt = DateTime.UtcNow;
             _context.Transactions.Add(transaction);
 
             var inventory = _context.Inventory.FirstOrDefault(i => i.MaterialId == transaction.MaterialId);
             if (inventory != null)
             {
                 inventory.Quantity += transaction.Quantity;
-                inventory.UpdatedAt = DateTime.Now;
+                inventory.UpdatedAt = DateTime.UtcNow;
             }
             else
             {
@@ -38,7 +38,7 @@ namespace InventorySystem.Controllers
                 {
                     MaterialId = transaction.MaterialId,
                     Quantity = transaction.Quantity,
-                    UpdatedAt = DateTime.Now
+                    UpdatedAt = DateTime.UtcNow
                 });
             }
 
@@ -52,7 +52,7 @@ namespace InventorySystem.Controllers
             if (transaction == null) return BadRequest("Invalid data.");
 
             transaction.Operation = "out";
-            transaction.CreatedAt = DateTime.Now;
+            transaction.CreatedAt = DateTime.UtcNow;
             _context.Transactions.Add(transaction);
 
             var inventory = _context.Inventory.FirstOrDefault(i => i.MaterialId == transaction.MaterialId);
@@ -62,7 +62,7 @@ namespace InventorySystem.Controllers
             }
 
             inventory.Quantity -= transaction.Quantity;
-            inventory.UpdatedAt = DateTime.Now;
+            inventory.UpdatedAt = DateTime.UtcNow;
 
             _context.SaveChanges();
             return Ok(new { message = "Scan-out successful." });
@@ -93,7 +93,7 @@ public IActionResult Undo()
         inventory.Quantity += lastTransaction.Quantity;
     }
 
-    inventory.UpdatedAt = DateTime.Now;
+    inventory.UpdatedAt = DateTime.UtcNow;
 
     _context.Transactions.Remove(lastTransaction);
     _context.SaveChanges();
